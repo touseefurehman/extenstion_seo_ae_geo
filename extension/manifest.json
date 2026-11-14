@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "NexusRank",
+  "version": "0.1.0",
+  "description": "Local SEO, AEO and GEO analysis for the page you are viewing. No data leaves your browser.",
+  "author": "WebsNexus",
+  "minimum_chrome_version": "110",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "action": {
+    "default_title": "NexusRank",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": { "service_worker": "background.js" },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

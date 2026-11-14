@@ -3,6 +3,7 @@
 NexusRank is a Chrome Extension (Manifest V3) by WebsNexus that runs SEO, AEO and GEO analysis on the page that is open in the current tab. All analysis happens locally. The full product spec is in `docs/SPEC.md`, and the build plan is in `docs/PLAN.md`. Read both before you start any phase.
 
 ## Non-negotiable rules
+
 1. **No network calls with page data.** Never send page content, URLs or reports anywhere. The only fetches allowed are same-origin `robots.txt` and the sitemap from the content-script context.
 2. **No remote code or fonts.** Bundle everything, including Bootstrap, Lucide and jsPDF. Use system font stacks only. Don't load anything from a CDN.
 3. **Least privilege.** Start with `activeTab`, `scripting` and `storage`. Don't use `<all_urls>`, `tabs` or `host_permissions` unless a phase explicitly justifies it in `docs/PERMISSIONS.md`.
@@ -11,6 +12,7 @@ NexusRank is a Chrome Extension (Manifest V3) by WebsNexus that runs SEO, AEO an
 6. **Recommended ≠ required.** In the schema inspector, label properties as `recommended` unless a spec truly mandates them.
 
 ## Architecture contract (most important)
+
 ```
 Page (content script) ──extract──▶ PageSnapshot (plain JSON, serializable)
                                          │
@@ -22,6 +24,7 @@ Page (content script) ──extract──▶ PageSnapshot (plain JSON, serializa
                                          ▼
                                      AuditReport ──▶ storage / UI / exports
 ```
+
 - `src/content/extractor.ts` is the **only** code that touches the live page DOM. It returns a `PageSnapshot` (see `src/types/snapshot.ts`).
 - Analyzers in `src/analyzers/**` are **pure** functions of the form `(snapshot) => CheckResult[]`. They don't use `document`, `window` or `chrome`, so they can run in Node/Vitest.
 - Every `CheckResult` has: `id`, `category` (`technical` | `onpage` | `aeo` | `geo`), `severity` (`critical` | `high` | `medium` | `low` | `info`), `status` (`passed` | `warning` | `failed` | `not_applicable` | `not_tested`), `weight`, `evidence` (real extracted values), `explanation` and `recommendation`.
@@ -30,6 +33,7 @@ Page (content script) ──extract──▶ PageSnapshot (plain JSON, serializa
 - The dashboard is an extension page (`dashboard.html`). It receives the target `tabId` through a URL param or a message and never analyzes itself.
 
 ## Folder layout
+
 ```
 src/
   background/      service worker: orchestrates injection, messaging
@@ -49,6 +53,7 @@ docs/              SPEC.md PLAN.md PERMISSIONS.md LIMITATIONS.md DEVELOPER.md
 ```
 
 ## Commands
+
 - `npm run dev`: Vite watch build into `dist/`
 - `npm run build`: production build into `dist/`
 - `npm run typecheck`: `tsc --noEmit`
@@ -57,6 +62,7 @@ docs/              SPEC.md PLAN.md PERMISSIONS.md LIMITATIONS.md DEVELOPER.md
 - `npm run test:e2e`: Playwright (loads `dist/` as an unpacked extension)
 
 ## Working rules
+
 - Work **one phase at a time** from `docs/PLAN.md`. At the end of every phase, run `typecheck`, `lint`, `test` and `build`, and fix every failure before you stop.
 - After each phase, update the phase checklist in `docs/PLAN.md` and write a short summary of what changed and what still needs doing.
 - Write tests at the same time as each analyzer. Don't save them for the end.

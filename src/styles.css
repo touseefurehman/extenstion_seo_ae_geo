@@ -1,0 +1,54 @@
+:root {
+  --nr-bg: #0b1220;
+  --nr-surface: #121a2b;
+  --nr-surface-2: #182238;
+  --nr-border: #25314a;
+  --nr-text: #e6ebf5;
+  --nr-muted: #9aa7bf;
+  --nr-blue: #4f8cff;
+  --nr-purple: #8b5cf6;
+  --nr-danger: #ff6b6b;
+  --nr-font: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+body {
+  background: var(--nr-bg);
+  color: var(--nr-text);
+  font-family: var(--nr-font);
+  margin: 0;
+}
+.nr-card {
+  background: var(--nr-surface);
+  border: 1px solid var(--nr-border);
+  border-radius: 12px;
+  padding: 16px;
+}
+.nr-muted {
+  color: var(--nr-muted);
+}
+.nr-btn-primary {
+  background: linear-gradient(135deg, var(--nr-blue), var(--nr-purple));
+  border: 0;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+.nr-btn-primary:disabled {
+  opacity: 0.6;
+}
+.nr-url {
+  word-break: break-all;
+  font-size: 12px;
+}
+.nr-popup {
+  width: 360px;
+  padding: 16px;
+}
+@keyframes nr-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin {
+  animation: nr-spin 1s linear infinite;
+}
