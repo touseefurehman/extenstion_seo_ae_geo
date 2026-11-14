@@ -174,3 +174,49 @@ test('reports: PDF, CSV and JSON exports download real files', async ({ analyze,
   expect(pdf.data.length).toBeGreaterThan(5000);
   await expect(dash.getByText('PDF downloaded.')).toBeVisible();
 });
+
+test('privacy: a full session (analyze, dashboard, exports) makes no requests beyond the analyzed site itself', async ({
+  analyze,
+  context,
+  baseUrl,
+}) => {
+  const requests: string[] = [];
+  context.on('request', (r) => requests.push(r.url()));
+
+  const popup = await analyze('organization');
+  const [dash] = await Promise.all([
+    context.waitForEvent('page'),
+    popup.getByRole('button', { name: 'Open dashboard' }).click(),
+  ]);
+  await dash.waitForLoadState();
+  for (const section of [
+    'Technical SEO',
+    'AEO Intelligence',
+    'GEO Intelligence',
+    'Schema Inspector',
+    'Links',
+    'History',
+    'Reports',
+  ]) {
+    await dash.getByRole('button', { name: section, exact: true }).click();
+  }
+  for (const label of ['Export CSV', 'Export JSON', 'Export PDF']) {
+    await Promise.all([
+      dash.waitForEvent('download'),
+      dash.getByRole('button', { name: label }).click(),
+    ]);
+  }
+
+  const origin = new URL(baseUrl).origin;
+  const external = requests.filter((u) => {
+    const url = new URL(u);
+    return (
+      !['chrome-extension:', 'blob:', 'data:', 'about:'].includes(url.protocol) &&
+      url.origin !== origin
+    );
+  });
+  expect(external, 'requests that left the analyzed origin').toEqual([]);
+  // The only requests the extension itself adds to the analyzed site are robots.txt and the sitemap.
+  const extra = requests.filter((u) => u.startsWith(origin) && /robots\.txt|sitemap\.xml/.test(u));
+  expect(extra.length).toBeGreaterThan(0);
+});

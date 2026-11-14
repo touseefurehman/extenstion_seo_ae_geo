@@ -32,3 +32,17 @@ See `tests/fixtures/README.md`. Each `<name>.html` has a `<name>.expected.json` 
 
 `npm run test:e2e` builds a test variant into `dist-e2e/` (`node scripts/build.mjs --e2e`) and runs Playwright against it with `launchPersistentContext` and `--load-extension`. The variant only differs from the shipped manifest by `host_permissions` for `localhost`/`127.0.0.1`: automated tests cannot click the toolbar icon, which is what normally grants `activeTab`, so the popup is opened as a page with `?tabId=` instead. The shipped `dist/` never contains host permissions.
 Set `CHROME_PATH` to use an existing Chromium (otherwise run `npx playwright install chromium`). Fixtures are served from `tests/fixtures` by a local server. Every test fails if an extension page or the service worker logs a console error.
+
+## Data flow at runtime
+
+1. The popup sends `nexusrank:analyze` with a `tabId` to the service worker (`src/background`).
+2. The worker checks the page is supported, injects `content.js`, receives the `PageSnapshot`, runs `buildReport` (analyzers, schema inspector, scoring) and saves the `AuditReport` through `src/storage/history.ts`.
+3. The popup shows the result; "Open dashboard" opens `dashboard/dashboard.html?report=<id>`, which reads saved reports from storage. The dashboard never analyzes anything itself.
+
+## Scoring
+
+`src/scoring/engine.ts`: `score = Σ(weight × severity multiplier × status value) ÷ Σ(weight × severity multiplier)` over applicable checks (passed 1, warning 0.5, failed 0). The overall score is the weighted mean of category scores that have applicable checks, re-normalized over those categories. All numbers live in `DEFAULT_SCORING` and the per-check table in `src/scoring/config.ts`; bump `CONFIG_VERSION` when they change. The report carries a full `breakdown` so the UI can show exactly how every score was computed.
+
+## Releasing
+
+`npm run package` runs the production build, the dist audit and writes `release/nexusrank-<version>.zip` (reproducible, no extra dependencies). Bump `version` in `extension/manifest.json` and `package.json` first.

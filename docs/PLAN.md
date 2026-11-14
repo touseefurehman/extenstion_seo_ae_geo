@@ -109,9 +109,9 @@ Playwright with `launchPersistentContext` and `--load-extension=dist`. Serve the
 
 ## Phase 14 — Hardening & docs
 
-- [ ] Audit for no remote URLs: `grep -r "http" dist/` must show only `schema.org` string literals
-- [ ] Fill in `README.md` (install, build, test), `docs/DEVELOPER.md` (how to add a check), `docs/PERMISSIONS.md` and `docs/LIMITATIONS.md`
-- [ ] Produce a final production build and a zip ready for the Chrome Web Store
+- [x] Audit for no remote URLs: `grep -r "http" dist/` must show only inert string literals (XML namespaces, a React error-doc pointer); enforced by `npm run audit:dist`
+- [x] Fill in `README.md` (install, build, test), `docs/DEVELOPER.md` (how to add a check), `docs/PERMISSIONS.md` and `docs/LIMITATIONS.md`
+- [x] Produce a final production build and a zip ready for the Chrome Web Store
 
 ---
 
