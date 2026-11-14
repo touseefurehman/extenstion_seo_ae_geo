@@ -13,3 +13,8 @@
 - Image natural size is 0 for images that have not loaded (for example lazy-loaded below the fold); `complete` tells you whether the value is meaningful.
 - RDFa support covers `typeof`/`property` items (not full RDFa prefix/vocab resolution). Microdata `itemref` is not followed.
 - Author, date and byline detection are heuristics (meta tags, `rel=author`, `itemprop`, `time` elements, `author`/`byline` class names).
+- A `noindex`/`nofollow` meta tag is reported as a warning, not a failure, because it is often intentional. The `X-Robots-Tag` HTTP header cannot be read from the page.
+- Image lazy-loading is judged on every image after the first (the first is assumed to be above the fold); real fold position is not measured.
+- Large-image detection only covers images for which the browser reports a size; cross-origin images without `Timing-Allow-Origin` are skipped and, if none are measurable, the check is `not_tested`.
+- hreflang validation checks code syntax, absolute URLs and a self-reference. Reciprocal links on the other language pages cannot be verified from one page.
+- Thresholds (title 30-60, description 70-160, DOM size, etc.) are editable guidelines in `src/scoring/config.ts`, not search-engine rules.

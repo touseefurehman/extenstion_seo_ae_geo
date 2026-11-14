@@ -45,10 +45,10 @@ Create these fixtures in `tests/fixtures/`: `well-optimized`, `missing-metadata`
 
 ## Phase 4 — SEO analyzers (pure)
 
-- [ ] `seo/metadata`, `seo/headings`, `seo/images`, `links/links`, `seo/technical`, `seo/performance`
-- [ ] Each check has a stable ID, for example `seo.title.length` or `tech.canonical.conflict`
-- [ ] Thresholds come from `scoring/config.ts`
-- [ ] Unit tests cover the pass, warn, fail and not-applicable paths for **every** check
+- [x] `seo/metadata`, `seo/headings`, `seo/images`, `links/links`, `seo/technical`, `seo/performance`
+- [x] Each check has a stable ID, for example `seo.title.length` or `tech.canonical.conflict`
+- [x] Thresholds come from `scoring/config.ts`
+- [x] Unit tests cover the pass, warn, fail and not-applicable paths for **every** check
 
 **Accept:** Every fixture produces the statuses listed in its `expected.json`.
 
