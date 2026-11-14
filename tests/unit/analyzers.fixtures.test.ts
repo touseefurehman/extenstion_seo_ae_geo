@@ -10,10 +10,7 @@ const names = readdirSync(FIXTURE_DIR)
   .map((f) => f.replace('.expected.json', ''))
   .sort();
 
-// AEO and GEO analyzers arrive in phases 5 and 6; their expected statuses are verified then.
-const pending = (id: string) => id.startsWith('aeo.') || id.startsWith('geo.');
-
-describe.each(names)('SEO analyzers on fixture %s', (name) => {
+describe.each(names)('Analyzers on fixture %s', (name) => {
   it('produce the statuses listed in expected.json', async () => {
     const expected = loadExpected(name);
     const snap = await extractSnapshot(loadFixtureDocument(name, expected.url), {
@@ -22,7 +19,6 @@ describe.each(names)('SEO analyzers on fixture %s', (name) => {
     const results = runAnalyzers(snap);
     const byId = new Map(results.map((r) => [r.id, r.status]));
     for (const [id, status] of Object.entries(expected.checks)) {
-      if (pending(id)) continue;
       expect(byId.get(id), `${name}: ${id}`).toBe(status);
     }
   });
@@ -47,7 +43,7 @@ describe('analyzer registry', () => {
     }
   });
 
-  it('every configured SEO/technical check is produced for a rich page', async () => {
+  it('every configured check is produced for a rich page', async () => {
     const snap = await extractSnapshot(
       loadFixtureDocument('well-optimized', 'https://example.com/x'),
       { fetch: mockFetch() },

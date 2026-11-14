@@ -66,9 +66,9 @@ Each result is tagged `evidence: detected` or `inferred`. Copy must never claim 
 
 ## Phase 7 — Schema inspector
 
-- [ ] Normalize JSON-LD, Microdata and RDFa into one tree, handling `@graph`, arrays and nesting
-- [ ] Per-type property maps (`schema/types/*.ts`) for Organization, LocalBusiness, Person, Article, Product, Service, FAQPage, BreadcrumbList, WebSite and WebPage, split into `required` (kept minimal), `recommended` and `optional`
-- [ ] Report invalid JSON-LD with its error message and the block index
+- [x] Normalize JSON-LD, Microdata and RDFa into one tree, handling `@graph`, arrays and nesting
+- [x] Per-type property maps (`schema/types/*.ts`) for Organization, LocalBusiness, Person, Article, Product, Service, FAQPage, BreadcrumbList, WebSite and WebPage, split into `required` (kept minimal), `recommended` and `optional`
+- [x] Report invalid JSON-LD with its error message and the block index
 
 **Accept:** On the bad-jsonld fixture, the inspector reports a syntax error without crashing and still parses the valid blocks.
 

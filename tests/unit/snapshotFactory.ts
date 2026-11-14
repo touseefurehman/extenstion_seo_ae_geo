@@ -155,3 +155,50 @@ export function statusOf(
 ): string | undefined {
   return results.find((r) => r.id === id)?.status;
 }
+
+import type { JsonLdBlock, ListInfo, ParagraphInfo, TableInfo } from '../../src/types/snapshot';
+
+export const para = (text: string, over: Partial<ParagraphInfo> = {}): ParagraphInfo => ({
+  text,
+  wordCount: text.trim().split(/\s+/).filter(Boolean).length,
+  afterHeadingIndex: null,
+  region: 'main',
+  ...over,
+});
+
+/** A paragraph of exactly n words. */
+export const words = (n: number, w = 'word') => Array.from({ length: n }, () => w).join(' ');
+
+export const list = (n: number, over: Partial<ListInfo> = {}): ListInfo => ({
+  ordered: false,
+  itemCount: n,
+  items: Array.from({ length: n }, (_, i) => `Item ${i + 1}`),
+  afterHeadingIndex: null,
+  region: 'main',
+  ...over,
+});
+
+export const table = (over: Partial<TableInfo> = {}): TableInfo => ({
+  rows: 2,
+  cols: 2,
+  hasHeader: true,
+  caption: null,
+  afterHeadingIndex: null,
+  region: 'main',
+  ...over,
+});
+
+export const jsonld = (value: unknown, index = 0): JsonLdBlock => ({
+  index,
+  raw: JSON.stringify(value),
+  rawTruncated: false,
+  parsed: value,
+  error: null,
+  tooLarge: false,
+});
+
+export const withJsonLd = (values: unknown[], over: Partial<PageSnapshot> = {}): PageSnapshot =>
+  blank({
+    structuredData: { jsonld: values.map((v, i) => jsonld(v, i)), microdata: [], rdfa: [] },
+    ...over,
+  });
