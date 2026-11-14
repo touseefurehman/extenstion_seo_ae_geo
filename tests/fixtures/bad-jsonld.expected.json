@@ -1,0 +1,17 @@
+{
+  "url": "https://example.com/schema-test",
+  "snapshot": {
+    "structuredData.jsonld.length": 3,
+    "structuredData.jsonld.0.error": null,
+    "structuredData.jsonld.0.parsed.name": "Valid Co",
+    "structuredData.jsonld.1.parsed": null,
+    "structuredData.jsonld.2.parsed": null
+  },
+  "snapshotNotNull": [
+    "structuredData.jsonld.1.error",
+    "structuredData.jsonld.2.error"
+  ],
+  "checks": {
+    "tech.structured.validjson": "failed"
+  }
+}

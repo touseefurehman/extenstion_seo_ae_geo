@@ -1,0 +1,29 @@
+{
+  "url": "https://example.com/large",
+  "generatedBy": "scripts/generate-large-fixture.mjs",
+  "snapshot": {
+    "totals.paragraphs": 4000,
+    "totals.headings": 573,
+    "totals.lists": 120,
+    "totals.tables": 120,
+    "totals.images": 1100,
+    "totals.links": 3200,
+    "totals.scripts": 350,
+    "totals.stylesheets": 350,
+    "paragraphs.length": 500,
+    "headings.length": 500,
+    "lists.length": 100,
+    "tables.length": 100,
+    "images.length": 1000,
+    "links.length": 3000,
+    "scripts.length": 300,
+    "stylesheets.length": 300
+  },
+  "snapshotIncludes": {
+    "truncated": ["headings", "images", "links", "lists", "paragraphs", "scripts", "stylesheets", "tables"]
+  },
+  "checks": {
+    "seo.title.present": "passed",
+    "seo.h1.single": "passed"
+  }
+}

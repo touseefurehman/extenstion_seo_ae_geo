@@ -1,0 +1,27 @@
+{
+  "url": "https://example.com/about",
+  "snapshot": {
+    "head.og.og:site_name": "BrewLab",
+    "structuredData.jsonld.0.parsed.@type": "Organization",
+    "structuredData.jsonld.0.parsed.sameAs.length": 3,
+    "structuredData.microdata.length": 1,
+    "structuredData.microdata.0.syntax": "microdata",
+    "structuredData.microdata.0.types": ["https://schema.org/LocalBusiness"],
+    "structuredData.microdata.0.properties.length": 3,
+    "structuredData.microdata.0.properties.0.name": "name",
+    "structuredData.microdata.0.properties.0.value": "BrewLab Roastery",
+    "structuredData.microdata.0.properties.1.name": "address",
+    "structuredData.microdata.0.properties.1.value.types": ["https://schema.org/PostalAddress"],
+    "structuredData.microdata.0.properties.1.value.properties.0.value": "12 Bean Street",
+    "structuredData.microdata.0.properties.2.value": "tel:+15035550123",
+    "signals.addresses": ["12 Bean Street, Portland"],
+    "signals.telLinks": ["+15035550123"],
+    "signals.mailtoLinks": ["hello@example.com"]
+  },
+  "checks": {
+    "geo.entity.organization": "passed",
+    "geo.sameas": "passed",
+    "geo.contact": "passed",
+    "geo.brand.consistency": "passed"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "url": "https://example.com/blog/cold-brew-explained",
+  "snapshot": {
+    "headings.length": 3,
+    "totals.links": 3,
+    "signals.authors.length": 3,
+    "signals.authors.0.source": "meta",
+    "signals.authors.1.source": "rel-author",
+    "signals.authors.1.text": "Daniel Okoye",
+    "signals.authors.2.source": "byline-class",
+    "signals.dates.length": 4,
+    "signals.dates.0.kind": "published",
+    "signals.dates.0.value": "2026-02-03T08:00:00Z",
+    "signals.dates.1.kind": "modified",
+    "signals.dates.2.source": "itemprop",
+    "signals.dates.2.value": "2026-02-03",
+    "signals.dates.3.source": "time",
+    "signals.dates.3.kind": "modified",
+    "signals.dates.3.value": "2026-03-01",
+    "signals.citations.blockquotes.length": 1,
+    "signals.citations.blockquotes.0.cite": "https://example.org/study",
+    "signals.citations.citeElements": 0,
+    "structuredData.jsonld.0.parsed.@type": "Article",
+    "structuredData.rdfa.length": 1,
+    "structuredData.rdfa.0.types": ["Person"],
+    "structuredData.rdfa.0.properties.0.name": "name",
+    "structuredData.rdfa.0.properties.0.value": "Daniel Okoye",
+    "structuredData.rdfa.0.properties.1.value": "Barista trainer"
+  },
+  "checks": {
+    "seo.description.present": "passed",
+    "tech.structured.validjson": "passed",
+    "aeo.author": "passed",
+    "aeo.dates": "passed",
+    "aeo.citations": "passed",
+    "aeo.definition.patterns": "passed"
+  }
+}

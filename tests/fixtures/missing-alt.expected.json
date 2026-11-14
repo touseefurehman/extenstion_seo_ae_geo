@@ -1,0 +1,19 @@
+{
+  "url": "https://example.com/gallery",
+  "snapshot": {
+    "totals.images": 5,
+    "images.0.alt": null,
+    "images.0.filename": "IMG_0001.jpg",
+    "images.0.widthAttr": 640,
+    "images.1.alt": null,
+    "images.1.widthAttr": null,
+    "images.2.alt": null,
+    "images.3.alt": "",
+    "images.4.alt": "The front entrance of our office",
+    "images.4.loading": "lazy"
+  },
+  "checks": {
+    "seo.images.alt": "failed",
+    "seo.h1.single": "passed"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "url": "https://example.com/",
+  "snapshot": {
+    "head.title": null,
+    "head.titleCount": 0,
+    "head.lang": null,
+    "head.canonicals.length": 0,
+    "head.hreflang.length": 0,
+    "headings.length": 1,
+    "totals.images": 0,
+    "robotsTxt.status": "not_found",
+    "robotsTxt.httpStatus": 404,
+    "sitemap.status": "not_found",
+    "sitemap.source": "default"
+  },
+  "checks": {
+    "seo.title.present": "failed",
+    "seo.title.length": "not_applicable",
+    "seo.description.present": "failed",
+    "seo.description.length": "not_applicable",
+    "seo.h1.single": "passed",
+    "seo.og.present": "failed",
+    "tech.canonical.present": "warning",
+    "tech.viewport": "failed",
+    "tech.lang": "warning",
+    "tech.structured.validjson": "not_applicable",
+    "tech.robotstxt": "warning",
+    "tech.sitemap": "warning"
+  }
+}

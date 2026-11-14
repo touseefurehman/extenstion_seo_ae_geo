@@ -1,0 +1,23 @@
+{
+  "url": "https://example.com/espresso-faq",
+  "snapshot": {
+    "headings.length": 3,
+    "headings.1.text": "How often should I descale an espresso machine?",
+    "faqBlocks.length": 2,
+    "faqBlocks.0.source": "details",
+    "faqBlocks.0.question": "Can I use pre-ground coffee?",
+    "faqBlocks.0.answer": "Yes, but freshly ground beans give better flavor.",
+    "faqBlocks.1.source": "dl",
+    "faqBlocks.1.question": "Portafilter?",
+    "faqBlocks.1.answer": "The handle that holds the coffee basket.",
+    "faqContainerHints": ["section#faq.faq-list"],
+    "structuredData.jsonld.length": 1,
+    "structuredData.jsonld.0.parsed.@type": "FAQPage",
+    "structuredData.jsonld.0.parsed.mainEntity.length": 2
+  },
+  "checks": {
+    "aeo.faq.schema": "passed",
+    "aeo.faq.section": "passed",
+    "aeo.questions.detected": "passed"
+  }
+}

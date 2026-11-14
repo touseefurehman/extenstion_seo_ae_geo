@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Page with one valid and two broken JSON-LD blocks</title>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "Organization", "name": "Valid Co", "url": "https://example.com/"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "Organization", "name": "Broken Co",}
+  </script>
+  <script type="application/ld+json"></script>
+</head>
+<body>
+  <h1>Structured data test</h1>
+</body>
+</html>
