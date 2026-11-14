@@ -27,3 +27,8 @@ See `tests/fixtures/README.md`. Each `<name>.html` has a `<name>.expected.json` 
 3. Register new analyzer functions in `src/analyzers/index.ts`.
 4. Add tests covering pass, warning, failure and not-applicable paths, and list the expected status in the relevant `tests/fixtures/*.expected.json`.
    The registry test fails if a configured check is never produced, or if an ID is duplicated.
+
+## End-to-end tests
+
+`npm run test:e2e` builds a test variant into `dist-e2e/` (`node scripts/build.mjs --e2e`) and runs Playwright against it with `launchPersistentContext` and `--load-extension`. The variant only differs from the shipped manifest by `host_permissions` for `localhost`/`127.0.0.1`: automated tests cannot click the toolbar icon, which is what normally grants `activeTab`, so the popup is opened as a page with `?tabId=` instead. The shipped `dist/` never contains host permissions.
+Set `CHROME_PATH` to use an existing Chromium (otherwise run `npx playwright install chromium`). Fixtures are served from `tests/fixtures` by a local server. Every test fails if an extension page or the service worker logs a console error.

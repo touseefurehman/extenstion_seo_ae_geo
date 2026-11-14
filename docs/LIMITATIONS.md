@@ -21,3 +21,5 @@
 - Saved reports keep a size-reduced copy of the extracted snapshot (for example 200 paragraphs, 500 links, 200 images) and never the page HTML. Real counts remain available in `totals`.
 - History lives in `chrome.storage.local` (about 10 MB without `unlimitedStorage`). NexusRank keeps a soft 8 MB budget and a configurable report cap (default 50), evicting the oldest reports first. `unlimitedStorage` is not requested.
 - The dashboard shows saved reports; it cannot re-analyze a tab by itself because `activeTab` access is granted only by clicking the extension icon on that tab. Use the popup to re-analyze.
+- The PDF export uses the built-in PDF fonts (Latin-1). Characters outside Latin-1 (for example CJK text in a page title) are replaced with `?` in the PDF; CSV and JSON keep the original text.
+- Schema "recommended" lists reflect common search-engine guidance and are not exhaustive; unknown types are shown without property guidance.

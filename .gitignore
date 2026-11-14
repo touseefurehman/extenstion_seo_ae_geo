@@ -4,3 +4,5 @@ dist/
 playwright-report/
 test-results/
 tests/fixtures/very-large.html
+dist-e2e/
+.e2e-profiles/

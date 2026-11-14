@@ -11,8 +11,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
-    "test:e2e": "playwright test",
-    "fixtures:large": "node scripts/generate-large-fixture.mjs"
+    "test:e2e": "npm run build:e2e && playwright test",
+    "fixtures:large": "node scripts/generate-large-fixture.mjs",
+    "build:e2e": "node scripts/build.mjs --e2e"
   },
   "dependencies": {
     "bootstrap": "^5.3.9",

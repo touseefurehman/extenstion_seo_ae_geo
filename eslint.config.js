@@ -17,6 +17,15 @@ export default tseslint.config(
     },
   },
   {
+    // Playwright fixtures use a callback named `use` and require an empty destructuring pattern.
+    files: ['tests/e2e/**/*.ts'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+      'no-empty-pattern': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+    },
+  },
+  {
     files: ['scripts/**/*.mjs', 'tests/**/*.mjs', '*.config.{js,ts}'],
     languageOptions: { globals: globals.node },
   },

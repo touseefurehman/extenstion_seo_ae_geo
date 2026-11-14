@@ -6,35 +6,9 @@ import {
   INDEX_KEY,
   migrateIndex,
   REPORT_PREFIX,
-  type StorageArea,
 } from '../../src/storage/history';
 import { blank } from './snapshotFactory';
-
-function fakeArea(opts: { quotaBytes?: number } = {}) {
-  const data = new Map<string, unknown>();
-  const used = () => [...data.values()].reduce<number>((n, v) => n + JSON.stringify(v).length, 0);
-  const area: StorageArea = {
-    get: async (keys) => {
-      const list = keys === null ? [...data.keys()] : Array.isArray(keys) ? keys : [keys];
-      return Object.fromEntries(
-        list.filter((k) => data.has(k)).map((k) => [k, structuredClone(data.get(k))]),
-      );
-    },
-    set: async (items) => {
-      const before = new Map(data);
-      for (const [k, v] of Object.entries(items)) data.set(k, structuredClone(v));
-      if (opts.quotaBytes && used() > opts.quotaBytes) {
-        data.clear();
-        before.forEach((v, k) => data.set(k, v));
-        throw new Error('QUOTA_BYTES quota exceeded');
-      }
-    },
-    remove: async (keys) => {
-      for (const k of Array.isArray(keys) ? keys : [keys]) data.delete(k);
-    },
-  };
-  return { area, data };
-}
+import { fakeArea } from './helpers';
 
 let n = 0;
 const report = (url = 'https://example.com/', over: { title?: string } = {}) => {
