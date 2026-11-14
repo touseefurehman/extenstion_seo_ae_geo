@@ -19,6 +19,7 @@ export function check(id: string, status: Status, d: CheckDetails): CheckResult 
   }
   const result: CheckResult = {
     id,
+    title: meta.title,
     category: meta.category,
     severity: meta.severity,
     status,

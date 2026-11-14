@@ -18,3 +18,6 @@
 - Large-image detection only covers images for which the browser reports a size; cross-origin images without `Timing-Allow-Origin` are skipped and, if none are measurable, the check is `not_tested`.
 - hreflang validation checks code syntax, absolute URLs and a self-reference. Reciprocal links on the other language pages cannot be verified from one page.
 - Thresholds (title 30-60, description 70-160, DOM size, etc.) are editable guidelines in `src/scoring/config.ts`, not search-engine rules.
+- Saved reports keep a size-reduced copy of the extracted snapshot (for example 200 paragraphs, 500 links, 200 images) and never the page HTML. Real counts remain available in `totals`.
+- History lives in `chrome.storage.local` (about 10 MB without `unlimitedStorage`). NexusRank keeps a soft 8 MB budget and a configurable report cap (default 50), evicting the oldest reports first. `unlimitedStorage` is not requested.
+- The dashboard shows saved reports; it cannot re-analyze a tab by itself because `activeTab` access is granted only by clicking the extension icon on that tab. Use the popup to re-analyze.

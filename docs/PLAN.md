@@ -74,17 +74,17 @@ Each result is tagged `evidence: detected` or `inferred`. Copy must never claim 
 
 ## Phase 8 — Scoring engine
 
-- [ ] `score(category) = Σ(weight × statusValue) / Σ(weight)` over applicable checks, where passed = 1, warning = 0.5 and failed = 0
-- [ ] Overall score = Technical 35% + On-page 25% + AEO 20% + GEO 20%, re-normalized if a category has no applicable checks
-- [ ] Severity multipliers are configurable
-- [ ] Expose a breakdown object so the UI can show exactly how each score was computed
+- [x] `score(category) = Σ(weight × statusValue) / Σ(weight)` over applicable checks, where passed = 1, warning = 0.5 and failed = 0
+- [x] Overall score = Technical 35% + On-page 25% + AEO 20% + GEO 20%, re-normalized if a category has no applicable checks
+- [x] Severity multipliers are configurable
+- [x] Expose a breakdown object so the UI can show exactly how each score was computed
 
 **Accept:** Unit tests cover every weighting rule, all-N/A categories and rounding.
 
 ## Phase 9 — Storage & history
 
-- [ ] `chrome.storage.local` wrapper with versioned schema, a configurable history cap (default 50) and delete/clear actions
-- [ ] Store reports only, not full page HTML. Use the `unlimitedStorage` permission only if it's justified.
+- [x] `chrome.storage.local` wrapper with versioned schema, a configurable history cap (default 50) and delete/clear actions
+- [x] Store reports only, not full page HTML. Use the `unlimitedStorage` permission only if it's justified.
 
 ## Phase 10 — Popup UI
 

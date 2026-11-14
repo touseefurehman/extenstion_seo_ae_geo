@@ -10,6 +10,8 @@ export interface Evidence {
 export interface CheckResult {
   /** Stable ID, e.g. `seo.title.length`. */
   id: string;
+  /** Human-readable name. */
+  title: string;
   category: Category;
   severity: Severity;
   status: Status;

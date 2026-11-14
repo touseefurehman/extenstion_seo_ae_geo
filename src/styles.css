@@ -52,3 +52,99 @@ body {
 .spin {
   animation: nr-spin 1s linear infinite;
 }
+
+.nr-card-error {
+  border-color: var(--nr-danger);
+}
+.nr-btn-secondary {
+  background: var(--nr-surface-2);
+  border: 1px solid var(--nr-border);
+  color: var(--nr-text);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+}
+.nr-btn-secondary:disabled {
+  opacity: 0.6;
+}
+.nr-btn-secondary:hover:not(:disabled) {
+  border-color: var(--nr-blue);
+}
+:root {
+  --nr-good: #34d399;
+  --nr-warn: #fbbf24;
+  --nr-bad: #f87171;
+  --nr-none: #64748b;
+}
+.nr-tone-good .nr-ring-value,
+.nr-bg-good {
+  stroke: var(--nr-good);
+  background: var(--nr-good);
+}
+.nr-tone-ok .nr-ring-value,
+.nr-bg-ok {
+  stroke: var(--nr-warn);
+  background: var(--nr-warn);
+}
+.nr-tone-bad .nr-ring-value,
+.nr-bg-bad {
+  stroke: var(--nr-bad);
+  background: var(--nr-bad);
+}
+.nr-tone-none .nr-ring-value,
+.nr-bg-none {
+  stroke: var(--nr-none);
+  background: var(--nr-none);
+}
+.nr-ring-value {
+  background: none !important;
+}
+.nr-ring-track {
+  stroke: var(--nr-surface-2);
+}
+.nr-ring-text {
+  fill: var(--nr-text);
+  font-weight: 700;
+}
+.nr-bar-row {
+  display: grid;
+  grid-template-columns: 96px 1fr 32px;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 13px;
+}
+.nr-bar-track {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--nr-surface-2);
+  overflow: hidden;
+}
+.nr-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  stroke: none;
+}
+.nr-bar-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.nr-issues {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.nr-issues li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.nr-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+}

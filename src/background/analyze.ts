@@ -1,4 +1,7 @@
+import { buildReport } from '../reports/build';
+import { chromeHistory } from '../storage/history';
 import type { AnalyzeResponse } from '../types/messages';
+import type { AuditReport } from '../types/report';
 import type { PageSnapshot } from '../types/snapshot';
 import { checkPageSupport } from '../utils/pageSupport';
 
@@ -6,6 +9,7 @@ import { checkPageSupport } from '../utils/pageSupport';
 export interface AnalyzeDeps {
   getTab(tabId: number): Promise<{ id?: number; url?: string } | undefined>;
   executeContentScript(tabId: number): Promise<unknown>;
+  saveReport(report: AuditReport): Promise<void>;
 }
 
 function isSnapshot(value: unknown): value is PageSnapshot {
@@ -17,6 +21,7 @@ function isSnapshot(value: unknown): value is PageSnapshot {
   );
 }
 
+/** Injects the content script into a tab, then analyzes, scores and stores the result locally. */
 export async function analyzeTab(tabId: number, deps: AnalyzeDeps): Promise<AnalyzeResponse> {
   let tab;
   try {
@@ -49,7 +54,24 @@ export async function analyzeTab(tabId: number, deps: AnalyzeDeps): Promise<Anal
       message: 'The page did not return any data. Reload the tab and try again.',
     };
   }
-  return { ok: true, snapshot: result };
+  let report: AuditReport;
+  try {
+    report = buildReport(result);
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error);
+    return {
+      ok: false,
+      code: 'analysis_failed',
+      message: `The analysis failed unexpectedly. ${detail}`,
+    };
+  }
+  try {
+    await deps.saveReport(report);
+    return { ok: true, report, saved: true };
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error);
+    return { ok: true, report, saved: false, saveError: detail };
+  }
 }
 
 export const chromeDeps: AnalyzeDeps = {
@@ -60,5 +82,8 @@ export const chromeDeps: AnalyzeDeps = {
       files: ['content.js'],
     });
     return results[0]?.result;
+  },
+  saveReport: async (report) => {
+    await chromeHistory().save(report);
   },
 };

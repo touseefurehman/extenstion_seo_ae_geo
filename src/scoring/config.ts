@@ -1,4 +1,5 @@
 import type { Category, Severity } from '../types/check';
+import type { ScoringConfig } from '../types/report';
 
 /**
  * All tunable numbers live here: thresholds used by analyzers and the weight/severity/category of
@@ -7,12 +8,15 @@ import type { Category, Severity } from '../types/check';
  */
 
 export interface CheckMeta {
+  /** Human-readable name shown in the UI and exports. */
+  title: string;
   category: Category;
   severity: Severity;
   weight: number;
 }
 
-const t = (category: Category, severity: Severity, weight: number): CheckMeta => ({
+const t = (category: Category, severity: Severity, weight: number, title: string): CheckMeta => ({
+  title,
   category,
   severity,
   weight,
@@ -20,72 +24,72 @@ const t = (category: Category, severity: Severity, weight: number): CheckMeta =>
 
 export const CHECKS: Record<string, CheckMeta> = {
   // ---- Technical SEO ----
-  'tech.https': t('technical', 'high', 8),
-  'tech.canonical.present': t('technical', 'medium', 8),
-  'tech.canonical.conflict': t('technical', 'high', 8),
-  'tech.robots.meta': t('technical', 'critical', 9),
-  'tech.viewport': t('technical', 'high', 7),
-  'tech.lang': t('technical', 'low', 5),
-  'tech.hreflang.valid': t('technical', 'medium', 4),
-  'tech.robotstxt': t('technical', 'medium', 6),
-  'tech.sitemap': t('technical', 'medium', 5),
-  'tech.structured.validjson': t('technical', 'high', 7),
-  'tech.links.invalidscheme': t('technical', 'low', 3),
-  'perf.dom.size': t('technical', 'low', 4),
-  'perf.html.size': t('technical', 'low', 3),
-  'perf.scripts.count': t('technical', 'low', 3),
-  'perf.stylesheets.count': t('technical', 'low', 2),
-  'perf.images.count': t('technical', 'low', 2),
-  'perf.images.lazy': t('technical', 'low', 3),
-  'perf.images.large': t('technical', 'low', 3),
-  'perf.resources.sizes': t('technical', 'low', 3),
+  'tech.https': t('technical', 'high', 8, 'HTTPS'),
+  'tech.canonical.present': t('technical', 'medium', 8, 'Canonical URL'),
+  'tech.canonical.conflict': t('technical', 'high', 8, 'Canonical conflicts'),
+  'tech.robots.meta': t('technical', 'critical', 9, 'Robots meta directives'),
+  'tech.viewport': t('technical', 'high', 7, 'Viewport meta tag'),
+  'tech.lang': t('technical', 'low', 5, 'Language attribute'),
+  'tech.hreflang.valid': t('technical', 'medium', 4, 'Hreflang tags'),
+  'tech.robotstxt': t('technical', 'medium', 6, 'robots.txt'),
+  'tech.sitemap': t('technical', 'medium', 5, 'XML sitemap'),
+  'tech.structured.validjson': t('technical', 'high', 7, 'JSON-LD syntax'),
+  'tech.links.invalidscheme': t('technical', 'low', 3, 'Link destinations'),
+  'perf.dom.size': t('technical', 'low', 4, 'DOM size'),
+  'perf.html.size': t('technical', 'low', 3, 'HTML size'),
+  'perf.scripts.count': t('technical', 'low', 3, 'Script count'),
+  'perf.stylesheets.count': t('technical', 'low', 2, 'Stylesheet count'),
+  'perf.images.count': t('technical', 'low', 2, 'Image count'),
+  'perf.images.lazy': t('technical', 'low', 3, 'Image lazy-loading'),
+  'perf.images.large': t('technical', 'low', 3, 'Large images'),
+  'perf.resources.sizes': t('technical', 'low', 3, 'Resource weight'),
   // ---- AEO ----
-  'aeo.questions.detected': t('aeo', 'medium', 5),
-  'aeo.answer.distance': t('aeo', 'medium', 6),
-  'aeo.faq.section': t('aeo', 'low', 5),
-  'aeo.faq.schema': t('aeo', 'low', 5),
-  'aeo.definition.patterns': t('aeo', 'low', 4),
-  'aeo.direct.answer': t('aeo', 'medium', 6),
-  'aeo.structure.lists': t('aeo', 'low', 4),
-  'aeo.structure.tables': t('aeo', 'low', 3),
-  'aeo.structure.steps': t('aeo', 'low', 3),
-  'aeo.paragraph.length': t('aeo', 'low', 4),
-  'aeo.readability': t('aeo', 'low', 4),
-  'aeo.author': t('aeo', 'medium', 5),
-  'aeo.dates': t('aeo', 'medium', 5),
-  'aeo.citations': t('aeo', 'low', 4),
-  'aeo.conversational': t('aeo', 'low', 3),
+  'aeo.questions.detected': t('aeo', 'medium', 5, 'Question phrases'),
+  'aeo.answer.distance': t('aeo', 'medium', 6, 'Question and answer proximity'),
+  'aeo.faq.section': t('aeo', 'low', 5, 'FAQ section'),
+  'aeo.faq.schema': t('aeo', 'low', 5, 'FAQPage structured data'),
+  'aeo.definition.patterns': t('aeo', 'low', 4, 'Definition-style content'),
+  'aeo.direct.answer': t('aeo', 'medium', 6, 'Direct answer paragraphs'),
+  'aeo.structure.lists': t('aeo', 'low', 4, 'Lists'),
+  'aeo.structure.tables': t('aeo', 'low', 3, 'Tables'),
+  'aeo.structure.steps': t('aeo', 'low', 3, 'Step-by-step content'),
+  'aeo.paragraph.length': t('aeo', 'low', 4, 'Paragraph length'),
+  'aeo.readability': t('aeo', 'low', 4, 'Readability'),
+  'aeo.author': t('aeo', 'medium', 5, 'Author information'),
+  'aeo.dates': t('aeo', 'medium', 5, 'Published and modified dates'),
+  'aeo.citations': t('aeo', 'low', 4, 'Citations and sources'),
+  'aeo.conversational': t('aeo', 'low', 3, 'Conversational question coverage'),
   // ---- GEO ----
-  'geo.entity.organization': t('geo', 'high', 7),
-  'geo.entity.person': t('geo', 'low', 4),
-  'geo.entity.product': t('geo', 'low', 4),
-  'geo.sameas': t('geo', 'medium', 5),
-  'geo.brand.consistency': t('geo', 'medium', 6),
-  'geo.contact': t('geo', 'medium', 5),
-  'geo.authorship': t('geo', 'medium', 6),
-  'geo.topical.coverage': t('geo', 'low', 5),
-  'geo.links.contextual': t('geo', 'low', 4),
-  'geo.claims.references': t('geo', 'low', 5),
+  'geo.entity.organization': t('geo', 'high', 7, 'Organization entity'),
+  'geo.entity.person': t('geo', 'low', 4, 'Person entity'),
+  'geo.entity.product': t('geo', 'low', 4, 'Product or service entity'),
+  'geo.sameas': t('geo', 'medium', 5, 'sameAs profile links'),
+  'geo.brand.consistency': t('geo', 'medium', 6, 'Brand consistency'),
+  'geo.contact': t('geo', 'medium', 5, 'Business contact information'),
+  'geo.authorship': t('geo', 'medium', 6, 'Authorship and expertise'),
+  'geo.topical.coverage': t('geo', 'low', 5, 'Topical coverage'),
+  'geo.links.contextual': t('geo', 'low', 4, 'Contextual internal links'),
+  'geo.claims.references': t('geo', 'low', 5, 'Claims and references'),
   // ---- On-page SEO ----
-  'seo.title.present': t('onpage', 'critical', 9),
-  'seo.title.length': t('onpage', 'medium', 6),
-  'seo.title.duplicate': t('onpage', 'medium', 3),
-  'seo.description.present': t('onpage', 'high', 8),
-  'seo.description.length': t('onpage', 'low', 5),
-  'seo.description.duplicate': t('onpage', 'low', 2),
-  'seo.metakeywords': t('onpage', 'info', 1),
-  'seo.h1.single': t('onpage', 'high', 9),
-  'seo.headings.hierarchy': t('onpage', 'medium', 6),
-  'seo.headings.empty': t('onpage', 'medium', 4),
-  'seo.images.alt': t('onpage', 'high', 7),
-  'seo.images.dimensions': t('onpage', 'low', 4),
-  'seo.images.filename': t('onpage', 'low', 2),
-  'seo.og.present': t('onpage', 'medium', 4),
-  'seo.twitter.present': t('onpage', 'low', 3),
-  'links.internal.count': t('onpage', 'medium', 4),
-  'links.anchor.empty': t('onpage', 'medium', 4),
-  'links.anchor.generic': t('onpage', 'low', 4),
-  'links.nofollow.ratio': t('onpage', 'low', 2),
+  'seo.title.present': t('onpage', 'critical', 9, 'Page title'),
+  'seo.title.length': t('onpage', 'medium', 6, 'Title length'),
+  'seo.title.duplicate': t('onpage', 'medium', 3, 'Duplicate titles'),
+  'seo.description.present': t('onpage', 'high', 8, 'Meta description'),
+  'seo.description.length': t('onpage', 'low', 5, 'Description length'),
+  'seo.description.duplicate': t('onpage', 'low', 2, 'Duplicate descriptions'),
+  'seo.metakeywords': t('onpage', 'info', 1, 'Meta keywords'),
+  'seo.h1.single': t('onpage', 'high', 9, 'H1 heading'),
+  'seo.headings.hierarchy': t('onpage', 'medium', 6, 'Heading hierarchy'),
+  'seo.headings.empty': t('onpage', 'medium', 4, 'Empty headings'),
+  'seo.images.alt': t('onpage', 'high', 7, 'Image alt text'),
+  'seo.images.dimensions': t('onpage', 'low', 4, 'Image dimensions'),
+  'seo.images.filename': t('onpage', 'low', 2, 'Image file names'),
+  'seo.og.present': t('onpage', 'medium', 4, 'Open Graph tags'),
+  'seo.twitter.present': t('onpage', 'low', 3, 'Twitter Card tags'),
+  'links.internal.count': t('onpage', 'medium', 4, 'Internal links'),
+  'links.anchor.empty': t('onpage', 'medium', 4, 'Empty anchor text'),
+  'links.anchor.generic': t('onpage', 'low', 4, 'Generic anchor text'),
+  'links.nofollow.ratio': t('onpage', 'low', 2, 'Internal nofollow links'),
 };
 
 export const THRESHOLDS = {
@@ -229,3 +233,13 @@ export const THRESHOLDS = {
     resourceInaccessibleMaxRatio: 0.5,
   },
 } as const;
+
+/** Scoring rules. Everything here can be overridden when calling the engine. */
+export const DEFAULT_SCORING: ScoringConfig = {
+  categoryWeights: { technical: 0.35, onpage: 0.25, aeo: 0.2, geo: 0.2 },
+  statusValues: { passed: 1, warning: 0.5, failed: 0 },
+  severityMultipliers: { critical: 1.5, high: 1.25, medium: 1, low: 0.75, info: 0.5 },
+};
+
+/** Bump when weights, thresholds or check logic change, so saved reports can be told apart. */
+export const CONFIG_VERSION = '1';
